@@ -1,3 +1,5 @@
+import pprint
+
 from configurator.configuration import *
 
 # -------------------------------------------参数配置-------------------------------------------
@@ -19,6 +21,8 @@ if __name__ == '__main__':
     env.configure(env_config)
     env.reset()
 
+    pprint.pprint(env.config)
+
     model = DQN('CnnPolicy', env,
                   policy_kwargs=dict(net_arch=net_arch),
                   learning_rate=5e-4,
@@ -32,11 +36,11 @@ if __name__ == '__main__':
                   verbose=1,
                   tensorboard_log=Logdir)
 
-    print(model.policy.q_net)
-
-    model.learn(total_timesteps=Total_timesteps)
-    model_file = f'{Root_dir}/model/AV_model/highway_dqn/{Experiment_name}/model'
-    model.save(model_file)
+    # print(model.policy.q_net)
+    #
+    # model.learn(total_timesteps=Total_timesteps)
+    # model_file = f'{Root_dir}/model/AV_model/highway_dqn/{Experiment_name}/model'
+    # model.save(model_file)
 
 
 

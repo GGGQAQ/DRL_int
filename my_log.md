@@ -53,7 +53,7 @@ model/AV_model/highway_dqn/20000steps_2 这个模型效果不错
 
 
 
+python main.py --env --alg --obs --act --net --policy_freq --simulate-freq --reward_speed_range --high_speed_reward --number_of_expirements --total_timesteps 10000
 
-
-
+python main.py --net [128] --number_of_expirements 1 --total_timesteps
 

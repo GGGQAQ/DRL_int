@@ -35,12 +35,12 @@ if __name__ == '__main__':
     # model = PPO.load(model_file, env)
     print(model.policy)
 
-    model.learn(total_timesteps=Total_timesteps)
-    model.save(model_file)
-
-    # 将字典保存到文件
-    with open(f'{model_path}/config.txt', 'w') as file:
-        json.dump(env.config, file, indent=4)
-
-    end_time = time.time()
-    print_time(start_time, end_time)
+    # model.learn(total_timesteps=Total_timesteps)
+    # model.save(model_file)
+    #
+    # # 将字典保存到文件
+    # with open(f'{model_path}/config.txt', 'w') as file:
+    #     json.dump(env.config, file, indent=4)
+    #
+    # end_time = time.time()
+    # print_time(start_time, end_time)

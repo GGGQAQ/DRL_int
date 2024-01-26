@@ -1,16 +1,16 @@
-import gymnasium
-
-from configurator.configuration import *
-import pprint
-
-import torchvision.models as models
+# import gymnasium
+#
+# from configurator.configuration import *
+# import pprint
+#
+# import torchvision.models as models
 
 
     # # 保存图形到文件，可以指定文件格式（如png、jpg、pdf等）
     # plt.savefig(f'{Root_dir}/picture_{_}.png')
 
 
-import numpy as np
+# import numpy as np
 
 
 # 假设你有一个包含数据的列表 data_list
@@ -303,73 +303,23 @@ import torch
 #
 # print(f"代码执行耗时：{int(hours)} 小时 {int(minutes)} 分钟 {seconds:.2f} 秒")
 
-import gymnasium
-import torch as th
-from stable_baselines3 import PPO
-from sb3_contrib import TQC
-from torch.distributions import Categorical
-import torch
-import torch.nn as nn
-import numpy as np
-from torch.nn import functional as F
-from stable_baselines3.common.env_util import make_vec_env
-from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
-from stable_baselines3.common.vec_env import SubprocVecEnv
-import highway_env
-import warnings
-warnings.filterwarnings('ignore')
 
-# ==================================
-#        Main script
-# ==================================
-
-
-def make_configure_env(**kwargs):
-    env = gym.make(kwargs["id"], render_mode = 'rgb_array')
-    env.configure(kwargs["config"])
-    env.reset()
-    return env
-
-
-env_kwargs = {
-    'id': 'highway-fast-v0',
-    'config': {
-        "action": {
-            "type": "ContinuousAction"
-        }
-    }
-}
-
-# n_cpu = 6
-# batch_size = 64
-env = make_configure_env(**env_kwargs)
-env.reset()
-policy_kwargs = dict(n_critics=2, n_quantiles=25)
-train=False
-if train:
-    model = TQC("MlpPolicy", env, top_quantiles_to_drop_per_net=2, verbose=1, policy_kwargs=policy_kwargs)
-    model.learn(total_timesteps=3000)
-    # Save the agent
-    model.save("highway_tqc/model_v2")
-model=TQC.load("highway_tqc/model_v2")
-env = make_configure_env(**env_kwargs)
-env.reset()
-for _ in range(50):
-    obs, info = env.reset()
-    done = False
-    while not done:
-        action, _ = model.predict(obs)
-        obs, reward, done, tr, info = env.step(action)
-        env.render()
-
-
-
-
-
-
-
-
-
+from stable_baselines3 import DQN
+import gymnasium as gym
+ggg = DQN
+env = gym.make('highway-fast')
+model = ggg('MlpPolicy', env,
+              policy_kwargs=dict(net_arch=[128]),
+              learning_rate=5e-4,
+              buffer_size=15000,
+              learning_starts=200,
+              batch_size=32,
+              gamma=0.8,
+              train_freq=1,
+              gradient_steps=1,
+              target_update_interval=50,
+              verbose=1)
+print(model.policy)
 
 
 
